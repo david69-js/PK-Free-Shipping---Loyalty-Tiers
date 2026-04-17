@@ -1,4 +1,10 @@
 {
-  "name": "discount-free-shipping-loyalty-tiers",
-  "description": "discount-free-shipping-loyalty-tiers"
+  "name": "Free Shipping Loyalty Tiers",
+  "description": "Free shipping for loyalty tiers",
+  "title": "Free Shipping Loyalty Tiers",
+  "tiers": {
+    "title": "Tiers",
+    "shippingDiscountPercent": "Shipping Discount Percent"
+    
+  }
 }

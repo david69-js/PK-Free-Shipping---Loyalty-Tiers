@@ -68,20 +68,6 @@ function App() {
               />
 
               <s-number-field
-                label={i18n.translate("tiers.minimumSubtotal")}
-                name={`tier-${index}-min-subtotal`}
-                value={String(tier.minimumSubtotal)}
-                min={0}
-                onChange={event =>
-                  onTierChange(
-                    index,
-                    "minimumSubtotal",
-                    Number(event.currentTarget.value),
-                  )
-                }
-              />
-
-              <s-number-field
                 label={i18n.translate("tiers.shippingDiscountPercent")}
                 name={`tier-${index}-percent`}
                 value={String(tier.shippingDiscountPercent)}
