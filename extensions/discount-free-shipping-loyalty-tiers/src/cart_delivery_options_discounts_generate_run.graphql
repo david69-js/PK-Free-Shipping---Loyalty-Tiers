@@ -1,0 +1,36 @@
+query Input {
+  cart {
+    cost {
+      subtotalAmount {
+        amount
+      }
+    }
+    deliveryGroups {
+      id
+      deliveryOptions {
+        handle
+        cost {
+          amount
+        }
+      }
+    }
+   buyerIdentity {
+      customer {
+        id
+        hasTags(tags: [
+          "tier: Defender",
+          "tier: Advocate",
+          "tier: Activist"
+        ]) {
+          tag
+          hasTag
+        }
+      }
+    }
+  }
+  discount {
+    metafield(namespace: "$app", key: "free-shipping-loyalty-tiers") {
+      jsonValue
+    }
+  }
+}

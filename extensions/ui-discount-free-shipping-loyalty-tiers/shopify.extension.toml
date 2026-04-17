@@ -1,0 +1,18 @@
+api_version = "2026-01"
+[[extensions]]
+# Change the merchant-facing name of the extension in locales/en.default.json
+name = "t:name"
+description = "t:description"
+handle = "ui-discount-free-shipping-loyalty-tiers"
+uid = "0d0efb24-432a-d2a5-a05f-5481ac43a4dc5e656007"
+type = "ui_extension"
+# Only 1 target can be specified for each Admin block extension
+[[extensions.targeting]]
+module = "./src/DiscountFunctionSettings.jsx"
+target = "admin.discount-details.function-settings.render"
+
+[[extensions.metafields]]
+namespace = "$app"
+key = "free-shipping-loyalty-tiers"
+
+
