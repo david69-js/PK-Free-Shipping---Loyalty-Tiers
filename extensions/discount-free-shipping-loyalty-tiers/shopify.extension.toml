@@ -23,3 +23,9 @@ description = "t:description"
 
 [extensions.ui]
 handle = "ui-discount-free-shipping-loyalty-tiers"
+[discount.metafields.app.free-shipping-loyalty-tiers]
+type = "json"
+name = "Free Shipping Loyalty Tiers configuration"
+description = "Threshold & gift variant config for the Free Shipping Loyalty Tiers discount function."
+access.admin = "merchant_read_write"
+access.storefront = "none"

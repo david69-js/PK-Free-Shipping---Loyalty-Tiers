@@ -32,35 +32,23 @@ export function cartDeliveryOptionsDiscountsGenerateRun(
 
   const customer = input.cart.buyerIdentity?.customer;
   const hasTags = customer?.hasTags ?? [];
-  const subtotal = input.cart.cost.subtotalAmount.amount;
 
+  // Find the first active VIP tier tag the customer has (any hasTag === true)
+  const activeTag = hasTags.find(t => t.hasTag === true);
 
-  const applicableTiers: TierConfig[] = tiers.filter(tier => {
-    const tagMatch = hasTags.find(
-      t => t.tag === tier.customerTag && t.hasTag === true,
-    );
-    if (!tagMatch) {
-      return false;
-    }
-    return subtotal >= tier.minimumSubtotal;
-  });
-
-  if (applicableTiers.length === 0) {
+  if (!activeTag) {
+    // Customer is not logged in or has none of the VIP tier tags
     return {operations: []};
   }
 
-  const bestTier = applicableTiers.reduce((currentBest, candidate) => {
-    if (!currentBest) return candidate;
-    return candidate.shippingDiscountPercent > currentBest.shippingDiscountPercent
-      ? candidate
-      : currentBest;
-  });
+  // Look up the discount % for this specific tag from the metafield config.
+  // Falls back to 100% (full free shipping) if no tier config is found — matching the Ruby logic.
+  const matchingTier = tiers.find(tier => tier.customerTag === activeTag.tag);
+  const discountPercent = matchingTier?.shippingDiscountPercent ?? 100;
 
-  const discountPercent = bestTier.shippingDiscountPercent ?? 0;
   if (discountPercent <= 0) {
     return {operations: []};
   }
-
 
   return {
     operations: [
@@ -70,7 +58,7 @@ export function cartDeliveryOptionsDiscountsGenerateRun(
             {
               message:
                 discountPercent === 100
-                  ? "Free Shipping"
+                  ? "FREE VIP GROUND SHIPPING (USPS Priority Express)"
                   : `${discountPercent}% off shipping`,
               targets: [
                 {
